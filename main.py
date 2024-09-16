@@ -28,14 +28,14 @@ def osname():
                 subprocess.call(['sudo', 'python3', *sys.argv])
                 sys.exit()
 
-            save.save_data("os", True)
+            save.save_data(True, "os")
             command("sudo apt update && sudo apt upgrade")
             colourprint.print_colored("Updating...", colourprint.ORANGE)
             command("sudo reboot")
             return True
         else:
             colourprint.print_colored("OS is not Linux based, this file will not work", colourprint.RED)
-            save.save_data("os", False)
+            save.save_data(False, "os")
             quit()
 
 def install_ubuntu_desktop():
@@ -43,8 +43,9 @@ def install_ubuntu_desktop():
         return True
     else:
         command("sudo apt install ubuntu-desktop")
-        save.save_data("ubuntu_desktop", True)
+        save.save_data(True,"ubuntu_desktop")
         return True
 
 if osname() == True:
     install_ubuntu_desktop()
+    colourprint.print_colored("Ubuntu installed", colourprint.GREEN)
