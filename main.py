@@ -8,21 +8,15 @@ import subprocess
 os_type = os.name
 
 def command(command):
-    process = subprocess.run(command, shell=True, capture_output=True, text=True)
-    colourprint.print_colored(f"Output: \n{process.stdout}", colourprint.ORANGE)
+    process = subprocess.run(command, shell=True)
     if process.stderr:
         colourprint.print_colored(f"Error: \n{process.stderr}")
         exit()
 
 
-
-def update():
-    command("sudo apt update && sudo apt upgrade")
-
-
 def osname():
     if (save.load_part("os") == True):
-        update()
+        command("sudo apt update && sudo apt upgrade")
     else:
         if os_type == 'posix':
             colourprint.print_colored("OS is running Linux", colourprint.GREEN)
