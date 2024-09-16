@@ -16,6 +16,7 @@ def command(command):
 
 def osname():
     if (save.load_part("os") == True):
+        colourprint.print_colored("OS has been previously verified")
         return True
     else:
         if os_type == 'posix':
@@ -40,6 +41,7 @@ def osname():
 
 def install_ubuntu_desktop():
     if save.load_part("ubuntu_desktop") == True:
+        colourprint.print_colored("Ubuntu has been previosly verified")
         return True
     else:
         command("sudo apt install ubuntu-desktop")
