@@ -16,7 +16,7 @@ def command(command):
 
 def osname():
     if (save.load_part("os") == True):
-        colourprint.print_colored("OS has been previously verified")
+        colourprint.print_colored("OS has been previously verified", colourprint.GREEN)
         return True
     else:
         if os_type == 'posix':
@@ -46,7 +46,7 @@ def install_ubuntu_desktop():
     else:
         colourprint.print_colored("Installing Ubuntu desktop...", colourprint.ORANGE)
         process = subprocess.run("sudo apt install ubuntu-desktop", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        
+
         if process.returncode == 0:
             save.save_data(True, "ubuntu_desktop")
             colourprint.print_colored("Ubuntu installed successfully", colourprint.GREEN)
@@ -55,5 +55,7 @@ def install_ubuntu_desktop():
         return True
 
 if osname() == True:
+    print(save.load_data())
+    time.sleep(5)
     install_ubuntu_desktop()
     colourprint.print_colored("Ubuntu installed", colourprint.GREEN)
