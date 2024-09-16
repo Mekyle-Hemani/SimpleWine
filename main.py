@@ -41,11 +41,17 @@ def osname():
 
 def install_ubuntu_desktop():
     if save.load_part("ubuntu_desktop") == True:
-        colourprint.print_colored("Ubuntu has been previosly verified")
+        colourprint.print_colored("Ubuntu has been previously verified", colourprint.GREEN)
         return True
     else:
-        command("sudo apt install ubuntu-desktop")
-        save.save_data(True,"ubuntu_desktop")
+        colourprint.print_colored("Installing Ubuntu desktop...", colourprint.ORANGE)
+        process = subprocess.run("sudo apt install ubuntu-desktop", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        
+        if process.returncode == 0:
+            save.save_data(True, "ubuntu_desktop")
+            colourprint.print_colored("Ubuntu installed successfully", colourprint.GREEN)
+        else:
+            colourprint.print_colored(f"Error installing Ubuntu: \n{process.stderr.decode()}", colourprint.RED)
         return True
 
 if osname() == True:
