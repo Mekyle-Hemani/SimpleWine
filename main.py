@@ -84,10 +84,20 @@ def defualt_display():
         if process.returncode == 0:
             save.save_data(True, "defualt_display")
             colourprint.print_colored("Defualt display installed successfully", colourprint.GREEN)
-            command("sudo reboot")
+            #command("sudo reboot")
         else:
             colourprint.print_colored(f"Error installing defualt display: \n{process.stderr.decode()}", colourprint.RED)
             return False
+        return True
+
+def command_create():
+    if save.load_part("command_create") == True:
+        return True
+    else:
+        colourprint.print_colored("reating gui command display...", colourprint.ORANGE)
+        subprocess.run("echo -e '#!/bin/bash\nsudo systemctl start lightdm' | sudo tee /usr/local/bin/start-gui", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        subprocess.run("sudo chmod +x /usr/local/bin/start-gui", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        save.save_data(True, "command_create")
         return True
 
 
@@ -101,6 +111,9 @@ if osname() == True:
     time.sleep(2)
     if lightdm() == False:
         quit()
-    if defualt_display == False:
+    if defualt_display() == False:
         quit()
+    if command_create() == False:
+        quit()
+    command("sudo reboot")
 
