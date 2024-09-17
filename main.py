@@ -30,6 +30,7 @@ def osname():
                 sys.exit()
 
             save.save_data(True, "os")
+            command("sudo apt-get update")
             command("sudo apt update && sudo apt upgrade")
             colourprint.print_colored("Updating...", colourprint.ORANGE)
             command("sudo reboot")
